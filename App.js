@@ -91,6 +91,9 @@ class Calculator {
         {
         this.previousOperand = this.currentOperand;
         }
+        if (current.textContent === '0'){
+            this.previousOperand = "0";
+        }
         this.currentOperand = "";
         this.operand =e.target.dataset.operator.toString();
         current.textContent = "";
