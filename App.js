@@ -7,7 +7,7 @@ const numbers = document.querySelectorAll('[data-number]');
 const operators = document.querySelectorAll('[data-operator]');
 const clear = document.getElementById('allClear');
 const expression = document.getElementById("expression");
-const sign = document.getElementById('sign');
+const clearError = document.getElementById('clear');
 const equal = document.getElementById('equals');
 
 // created a Calculator class
@@ -115,18 +115,17 @@ class Calculator {
         this.updateDisplay();
     }
     // the change sign button has not been fully implemented as of yet
-    changeSign()
+    clearE()
     {
-    if (this.currentOperand === "" )
-    {
-        current.textContent = `-`;
-        return;
-
-    }
-        this.currentOperand = parseFloat(this.currentOperand) * -1;
-        current.textContent = `-${this.currentOperand}`;
-
-    }
+        if (typeof this.currentOperand != 'string')
+        {
+            this.currentOperand = this.currentOperand.toString();
+            
+        }
+        this.currentOperand = this.currentOperand.slice(0, this.currentOperand.length-1);
+        current.textContent=`${this.currentOperand}`;
+   
+}
 }
 // this where we create a calc object that will make use of the Calculator class methods
 const calc = new Calculator();
@@ -134,15 +133,7 @@ const calc = new Calculator();
 // Due to the fact that this looses it meaning when called directly in a function
 // we have to wrap it in an Anon Function
 // goes through all the number buttons appends a number
-numbers.forEach( (number) =>
- {
-    number.addEventListener('click',(e) => 
-    {
-        calc.appendNumber(e)
-    }
-    );
-    }
-    );
+numbers.forEach((number) =>{number.addEventListener('click',(e) => {calc.appendNumber(e)})});
 
     // An eventListener to look out for click events on the operator buttons
         operators.forEach( 
@@ -156,10 +147,10 @@ numbers.forEach( (number) =>
             }
             );
 //An eventListener to look out for click events on the change sign button
-sign.addEventListener('click',
+clearError.addEventListener('click',
 (e) =>
 { 
-    calc.changeSign()
+    calc.clearE();
 }
 );
 // looks out for the equal to button when it is clicked.
